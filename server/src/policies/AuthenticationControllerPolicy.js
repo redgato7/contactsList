@@ -4,10 +4,10 @@ module.exports = {
   registerContact (req, res, next) {
     const schema = {
       name: Joi.string().regex(
-        new RegExp('^[a-zA-Z]{2,64}$')
+        new RegExp('^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{2,64}$')
       ),
       surname: Joi.string().regex(
-        new RegExp('^[a-zA-Z]{2,64}$')
+        new RegExp('^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{2,64}$')
       ),
       phonenumber: Joi.string().regex(
         new RegExp('^[0-9]{6,12}$')

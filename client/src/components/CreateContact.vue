@@ -4,16 +4,13 @@
         <v-flex xs12>
     <div>
     <h1>
-      Add your new contact here.
+      Register your contact here.
     </h1>
-    <br>
-    <p>Fill up all the inputs and then press <strong>Register</strong> button.<br>
-       If you want to just check a contact list press the <strong>Contacts</strong> button </p>
     <v-text-field
     prepend-icon="sentiment_very_satisfied"
     type="text"
     name="name"
-    v-model="name"
+    v-model="contact.name"
     label="Name"
     clearable
     color="blue" />
@@ -22,7 +19,7 @@
     prepend-icon="sentiment_satisfied"
     type="text"
     name="surname"
-    v-model="surname"
+    v-model="contact.surname"
     label="Surname"
     clearable
     color="blue" />
@@ -31,16 +28,12 @@
     prepend-icon="phone"
     type="text"
     name="phonenumber"
-    v-model="phonenumber"
+    v-model="contact.phonenumber"
     label="Phone Number"
     clearable
     color="blue" />
     <br>
-    <v-btn flat large color="blue" outline
-    :to="{name: 'contacts'}">Contacts list</v-btn>
-    or
-    <v-btn flat large color="blue" outline @click="register"
-    >Register</v-btn>
+    <v-btn flat large color="blue" outline @click="create">Register</v-btn>
     <div class="error" v-html="error" />
   </div>
       </v-flex>
@@ -54,22 +47,32 @@ export default {
 
   data () {
     return {
-      name: '',
-      surname: '',
-      phonenumber: '',
-      error: null
+      contact: {
+        name: '',
+        surname: '',
+        phonenumber: ''
+      },
+      error: null,
+      required: (value) => !!value || 'Required.'
     }
   },
   methods: {
-    async register () {
+    async create () {
+      this.error = null
+      const areAllFieldsFilledIn = Object
+        .keys(this.contact)
+        .every(key => !!this.contact[key])
+      if (!areAllFieldsFilledIn) {
+        this.error = 'Please fill in all the required fields.'
+        return
+      }
       try {
-        await AuthenticationService.registerContact({
-          name: this.name,
-          surname: this.surname,
-          phonenumber: this.phonenumber
+        await AuthenticationService.post(this.contact)
+        this.$router.push({
+          name: 'contacts'
         })
-      } catch (error) {
-        this.error = error.response.data.error
+      } catch (err) {
+        console.log(err)
       }
     }
   }
@@ -80,9 +83,6 @@ export default {
 <style scoped>
 
 h1 {
-  color: #2196F3;
-}
-p {
   color: #2196F3;
 }
 

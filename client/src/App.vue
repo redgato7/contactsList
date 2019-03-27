@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/contactslist.png">
+    <img src="./assets/logo.png">
     <router-view/>
   </div>
 </template>
@@ -24,4 +24,11 @@ export default {
 .error {
   color:red;
 }
+img {
+  height: 200px;
+}
+h1, p {
+  color: #2196F3;
+}
+
 </style>
