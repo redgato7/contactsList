@@ -22,6 +22,7 @@
     placeholder="phone number" />
     <br>
     <button @click="register"> Register </button>
+    <div class="error" v-html="error" />
   </div>
 </template>
 
@@ -32,18 +33,22 @@ export default {
   data () {
     return {
       name: 'Dawid',
-      surname: 'Zębacki',
-      phonenumber: '664545106'
+      surname: 'Zebacki',
+      phonenumber: '664545106',
+      error: null
     }
   },
   methods: {
     async register () {
-      const response = await AuthenticationService.registerContact({
-        name: this.name,
-        surname: this.password,
-        phonenumber: this.phonenumber
-      })
-      console.log(response.data)
+      try {
+        await AuthenticationService.registerContact({
+          name: this.name,
+          surname: this.surname,
+          phonenumber: this.phonenumber
+        })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     }
   }
 }
