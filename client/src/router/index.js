@@ -28,6 +28,9 @@ export default new Router({
       path: '/contacts/:contactId',
       name: 'contact',
       component: ViewContact
+    },
+    { path: '*',
+      redirect: 'contacts'
     }
   ]
 })

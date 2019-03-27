@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+      <main>
+          <img src="./assets/logo.png">
+          <router-view/>
+      </main>
   </div>
 </template>
 
@@ -18,11 +20,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
 
 }
-.error {
-  color:red;
+.err {
+  color: red;
+  font-weight: bold;
 }
 img {
   height: 200px;

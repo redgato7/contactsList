@@ -41,7 +41,7 @@
     or
     <v-btn flat large color="blue" outline @click="register"
     >Register</v-btn>
-    <div class="error" v-html="error" />
+    <div class = "err" v-html="error" />
   </div>
       </v-flex>
     </v-layout>
@@ -61,12 +61,33 @@ export default {
     }
   },
   methods: {
+    // async register () {
+    //   this.error = null
+    //   const areAllFieldsFilledIn = Object
+    //     .keys(this.contact)
+    //     .every(key => !!this.contact[key])
+    //   if (!areAllFieldsFilledIn) {
+    //     this.error = 'Please fill fields.'
+    //     return
+    //   }
+    //   try {
+    //     await AuthenticationService.registerContact(this.contact)
+    //     this.$router.push({
+    //       name: 'contacts'
+    //     })
+    //   } catch (err) {
+    //     console.log(err)
+    //   }
+    // }
     async register () {
       try {
         await AuthenticationService.registerContact({
           name: this.name,
           surname: this.surname,
           phonenumber: this.phonenumber
+        })
+        this.$router.push({
+          name: 'contacts'
         })
       } catch (error) {
         this.error = error.response.data.error

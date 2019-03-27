@@ -16,5 +16,8 @@ export default {
   },
   put (contact) {
     return Api().put(`contacts/${contact.id}`, contact)
+  },
+  delete (contactId) {
+    return Api().delete(`contacts/${contactId}`)
   }
 }

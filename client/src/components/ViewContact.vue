@@ -4,33 +4,44 @@
         <v-flex xs12>
     <div>
     <h1>
-      Register your contact here. {{contact.id}}
+      Are you sure that you want to delete this contact?
     </h1>
-    <v-text-field
-          maxlength="50"
-          counter="50"
-          label="Nazwa contactu [100g]"
-          v-model="contact.name"
-          disabled
-        ></v-text-field>
+    <br>
+    <p>Press <strong>Delete</strong> button if you are 100% sure.<br>
+       If you want to go back, press the <strong>Cancel</strong> button</p>
+    </div>
+    <!-- <v-text-field
+    prepend-icon="sentiment_very_satisfied"
+    type="text"
+    name="name"
+    v-model="contact.name"
+    label="Name"
+    disable
+    color="blue" />
     <br>
     <v-text-field
-          maxlength="50"
-          counter="50"
-          label="Nazwa contactu [100g]"
-          v-model="contact.surname"
-          disabled
-        ></v-text-field>
+    prepend-icon="sentiment_satisfied"
+    type="text"
+    name="surname"
+    v-model="contact.surname"
+    label="Surname"
+    disable
+    color="blue" />
     <br>
     <v-text-field
-          maxlength="50"
-          counter="50"
-          label="Nazwa contactu [100g]"
-          v-model="contact.phonenumber"
-          disabled
-        ></v-text-field>
+    prepend-icon="phone"
+    type="text"
+    name="phonenumber"
+    v-model="contact.phonenumber"
+    label="Phone Number"
+    disable
+    color="blue" />
     <br>
-  </div>
+    <v-btn flat large color="blue" outline
+    :to="{name: 'contacts'}">Cancel</v-btn>
+    or
+    <v-btn flat large color="blue" outline @click="unsetAsContactEntirely"
+    >Delete</v-btn> -->
       </v-flex>
     </v-layout>
   </v-container>
@@ -38,36 +49,17 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
-export default {
 
+export default {
   data () {
-    return {
-      contact: {
-        name: null,
-        surname: null,
-        phonenumber: null
-      }
-    }
   },
   methods: {
-    async save () {
-      this.error = null
-      const areAllFieldsFilledIn = Object
-        .keys(this.contact)
-        .every(key => !!this.contact[key])
-      if (!areAllFieldsFilledIn) {
-        this.error = 'Wypełnij wymagane pola.'
-        return
-      }
-
-      const contactId = this.$store.state.route.params.contactId
+    async unsetAsContactEntirely () {
       try {
-        await AuthenticationService.put(this.contact)
+        await AuthenticationService.delete(this.contact.id)
+        this.contact = null
         this.$router.push({
-          name: 'contacts',
-          params: {
-            contactId: contactId
-          }
+          name: 'contacts'
         })
       } catch (err) {
         console.log(err)
@@ -76,20 +68,16 @@ export default {
   },
   async mounted () {
     try {
-      const contactId = this.$store.state.route.params.contactId
-      this.contact = (await AuthenticationService.show(contactId))
+      const contactId = this.route.params.contactId
+      this.contact = (await AuthenticationService.show(contactId)).data
     } catch (err) {
       console.log(err)
     }
   }
 }
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-h1 {
-  color: #2196F3;
-}
 
 </style>

@@ -2,7 +2,13 @@
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
         <v-flex xs12>
-
+          <h1>
+            This is your contact list.
+          </h1>
+          <br>
+          <p>You can sort the data by clicking on <strong>Name</strong> or <strong>Surname</strong>.<br>
+             Also if you start typing something in <strong>Search</strong> you will be able to see<br>
+              only records which they have letters typed in console.</p>
       <v-text-field
         v-model="search"
         append-icon="search"
@@ -10,33 +16,30 @@
         single-line
         hide-details
       ></v-text-field>
-    <v-data-table
+      <v-data-table
       :headers="headers"
       :items="contacts"
-      :search="search"
-    >
+      :search="search">
       <template v-slot:items="props">
         <td class="text-xs-left">{{ props.item.phonenumber }}</td>
         <td class="text-xs-left">{{ props.item.name }}</td>
         <td class="text-xs-left">{{ props.item.surname }}</td>
         <td class="text-xs-right">
           <router-link :to="{path: `${props.item.id}/edit`}">
-
-                  <v-icon> edit </v-icon>
+            <v-icon> edit </v-icon>
           </router-link>
           <router-link :to="{path: `${props.item.id}`}">
-
-                  <v-icon> delete </v-icon>
+            <v-icon> delete </v-icon>
           </router-link>
-        </td>
+          </td>
 
-      </template>
-      <v-alert v-slot:no-results :value="true" color="error" icon="warning">
-        Your search for "{{ search }}" found no results.
-      </v-alert>
-    </v-data-table>
-    <v-btn flat large color="blue"
-     outline :to="{name: 'registercontact'}">
+          </template>
+          <v-alert v-slot:no-results :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+          </v-alert>
+          </v-data-table>
+          <v-btn flat large color="blue"
+            outline :to="{name: 'registercontact'}">
             Add new contact
           </v-btn>
       </v-flex>
@@ -72,18 +75,8 @@ export default {
       }
     }
   },
-  methods: {
-    async register () {
-      try {
-        await AuthenticationService.post({
-          name: this.name,
-          surname: this.surname,
-          phonenumber: this.phonenumber
-        })
-      } catch (error) {
-        this.error = error.response.data.error
-      }
-    }
+  async mounted () {
+    this.contact = (await AuthenticationService.index()).data
   }
 }
 </script>
