@@ -1,29 +1,44 @@
 <template>
-  <div>
+  <v-container grid-list-md text-xs-center>
+    <v-layout row wrap>
+        <v-flex xs12>
+    <div>
     <h1>
       Register your contact here.
     </h1>
-    <input
+    <v-text-field
+    prepend-icon="sentiment_very_satisfied"
     type="text"
     name="name"
     v-model="name"
-    placeholder="name" />
+    label="Name"
+    clearable
+    color="blue" />
     <br>
-    <input
+    <v-text-field
+    prepend-icon="sentiment_satisfied"
     type="text"
     name="surname"
     v-model="surname"
-    placeholder="surname" />
+    label="Surname"
+    clearable
+    color="blue" />
     <br>
-    <input
+    <v-text-field
+    prepend-icon="phone"
     type="text"
     name="phonenumber"
     v-model="phonenumber"
-    placeholder="phone number" />
+    label="Phone Number"
+    clearable
+    color="blue" />
     <br>
-    <button @click="register"> Register </button>
+    <v-btn flat large color="blue" outline @click="register">Register</v-btn>
     <div class="error" v-html="error" />
   </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -32,9 +47,9 @@ export default {
 
   data () {
     return {
-      name: 'Dawid',
-      surname: 'Zebacki',
-      phonenumber: '664545106',
+      name: '',
+      surname: '',
+      phonenumber: '',
       error: null
     }
   },
@@ -56,5 +71,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+h1 {
+  color: #2196F3;
+}
 
 </style>

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import ViewContacts from '@/components/ViewContacts'
 import RegisterContact from '@/components/RegisterContact'
 
 Vue.use(Router)
@@ -8,9 +8,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/viewcontacts',
+      name: 'viewcontacts',
+      component: ViewContacts
     },
     {
       path: '/registercontact',
